@@ -293,16 +293,18 @@ function playAnimation(animation, reverseAnimation) {
   // Stop any blinking first
   stopBlinking();
   
-  // Remove all animation classes
+  // Remove all animation classes and force a reflow
   heroImage.className = "";
+  void heroImage.offsetWidth; // Force reflow
   
   if (lastReverseAnimation !== "") {
     heroImage.classList.add(lastReverseAnimation);
     setTimeout(function () {
       heroImage.classList.remove(lastReverseAnimation);
+      void heroImage.offsetWidth; // Force reflow
       heroImage.classList.add(animation);
       lastReverseAnimation = reverseAnimation;
-    }, 200);
+    }, 300); // Match CSS animation duration
   } else {
     heroImage.classList.add(animation);
     lastReverseAnimation = reverseAnimation;
@@ -337,18 +339,19 @@ function playClosingAnimation(reverseAnimation) {
       brBtn.style.color = textColor;
       brContent.style.transform = brHidden;
       break;
-
     default:
   }
 
   heroImage.className = "";
+  void heroImage.offsetWidth; // Force reflow
   lastReverseAnimation = "";
   activeCorner = "";
   heroImage.classList.add(reverseAnimation);
   setTimeout(function () {
     heroImage.classList.remove(reverseAnimation);
-  }, 200);
-  startBlinking();
+    void heroImage.offsetWidth; // Force reflow
+  }, 300); // Match CSS animation duration
+  setTimeout(startBlinking, 400); // Start blinking after animation completes
 }
 
 // Onclick corner button functions

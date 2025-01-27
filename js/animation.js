@@ -16,6 +16,11 @@ const trContent = document.querySelector("#grid__tr__content");
 const blContent = document.querySelector("#grid__bl__content");
 const brContent = document.querySelector("#grid__br__content");
 
+// Define project elements
+const projectOne = document.querySelector(".p-1");
+const projectTwo = document.querySelector(".p-2");
+const projectThree = document.querySelector(".p-3");
+
 // Store current button texts
 let currentTexts = {
   about: tlBtn.textContent,

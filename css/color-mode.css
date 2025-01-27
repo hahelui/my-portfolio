@@ -1,0 +1,323 @@
+/* LIGHT MODE */
+
+body:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  content: url(../assets/face-animation-light/bl-1.png)
+    url(../assets/face-animation-light/bl-2.png)
+    url(../assets/face-animation-light/bl-3.png)
+    url(../assets/face-animation-light/bl-4.png)
+    url(../assets/face-animation-light/bl-5.png)
+    url(../assets/face-animation-light/tr-1.png)
+    url(../assets/face-animation-light/tr-2.png)
+    url(../assets/face-animation-light/tr-3.png)
+    url(../assets/face-animation-light/tr-4.png)
+    url(../assets/face-animation-light/tr-5.png)
+    url(../assets/face-animation-light/bl-1.png)
+    url(../assets/face-animation-light/bl-2.png)
+    url(../assets/face-animation-light/bl-3.png)
+    url(../assets/face-animation-light/bl-4.png)
+    url(../assets/face-animation-light/bl-5.png)
+    url(../assets/face-animation-light/br-1.png)
+    url(../assets/face-animation-light/br-2.png)
+    url(../assets/face-animation-light/br-3.png)
+    url(../assets/face-animation-light/br-4.png)
+    url(../assets/face-animation-light/br-5.png)
+    url(../assets/face-animation-dark/blw-1.png)
+    url(../assets/face-animation-dark/blw-2.png)
+    url(../assets/face-animation-dark/blw-3.png)
+    url(../assets/face-animation-dark/blw-4.png)
+    url(../assets/face-animation-dark/blw-5.png)
+    url(../assets/face-animation-dark/trw-1.png)
+    url(../assets/face-animation-dark/trw-2.png)
+    url(../assets/face-animation-dark/trw-3.png)
+    url(../assets/face-animation-dark/trw-4.png)
+    url(../assets/face-animation-dark/trw-5.png)
+    url(../assets/face-animation-dark/blw-1.png)
+    url(../assets/face-animation-dark/blw-2.png)
+    url(../assets/face-animation-dark/blw-3.png)
+    url(../assets/face-animation-dark/blw-4.png)
+    url(../assets/face-animation-dark/blw-5.png)
+    url(../assets/face-animation-dark/brw-1.png)
+    url(../assets/face-animation-dark/brw-2.png)
+    url(../assets/face-animation-dark/brw-3.png)
+    url(../assets/face-animation-dark/brw-4.png)
+    url(../assets/face-animation-dark/brw-5.png);
+}
+
+:root {
+  /* Colors */
+  --bg: #fff;
+  --bg-alt: #333;
+  --bg-alt-2: #f0f0f0;
+  --bg-transparent: #ffffffe8;
+  --border: 0.01rem solid #333;
+  --text: #333;
+  --text-alt: #fff;
+
+  /* Face animations */
+  --face-default: url(../assets/face-animation-light/tl-1.png);
+  --face-blink: url(../assets/face-animation-light/blink.png);
+
+  --tl-1: url(../assets/face-animation-light/tl-1.png);
+  --tl-2: url(../assets/face-animation-light/tl-2.png);
+  --tl-3: url(../assets/face-animation-light/tl-3.png);
+  --tl-4: url(../assets/face-animation-light/tl-4.png);
+  --tl-5: url(../assets/face-animation-light/tl-5.png);
+
+  --tr-1: url(../assets/face-animation-light/tr-1.png);
+  --tr-2: url(../assets/face-animation-light/tr-2.png);
+  --tr-3: url(../assets/face-animation-light/tr-3.png);
+  --tr-4: url(../assets/face-animation-light/tr-4.png);
+  --tr-5: url(../assets/face-animation-light/tr-5.png);
+
+  --bl-1: url(../assets/face-animation-light/bl-1.png);
+  --bl-2: url(../assets/face-animation-light/bl-2.png);
+  --bl-3: url(../assets/face-animation-light/bl-3.png);
+  --bl-4: url(../assets/face-animation-light/bl-4.png);
+  --bl-5: url(../assets/face-animation-light/bl-5.png);
+
+  --br-1: url(../assets/face-animation-light/br-1.png);
+  --br-2: url(../assets/face-animation-light/br-2.png);
+  --br-3: url(../assets/face-animation-light/br-3.png);
+  --br-4: url(../assets/face-animation-light/br-4.png);
+  --br-5: url(../assets/face-animation-light/br-5.png);
+}
+
+/* DARK MODE */
+
+:root.dark-mode {
+  --bg: #202124;
+  --bg-alt: #3c3d40;
+  --bg-alt-2: #333;
+  --bg-transparent: #333333f5;
+  --border: 0.01rem solid #5a5a5a;
+  --text: #fff;
+
+  --face-default: url(../assets/face-animation-dark/tlw-1.png);
+  --face-blink: url(../assets/face-animation-dark/blinkw.png);
+
+  --tl-1: url(../assets/face-animation-dark/tlw-1.png);
+  --tl-2: url(../assets/face-animation-dark/tlw-2.png);
+  --tl-3: url(../assets/face-animation-dark/tlw-3.png);
+  --tl-4: url(../assets/face-animation-dark/tlw-4.png);
+  --tl-5: url(../assets/face-animation-dark/tlw-5.png);
+
+  --tr-1: url(../assets/face-animation-dark/trw-1.png);
+  --tr-2: url(../assets/face-animation-dark/trw-2.png);
+  --tr-3: url(../assets/face-animation-dark/trw-3.png);
+  --tr-4: url(../assets/face-animation-dark/trw-4.png);
+  --tr-5: url(../assets/face-animation-dark/trw-5.png);
+
+  --bl-1: url(../assets/face-animation-dark/blw-1.png);
+  --bl-2: url(../assets/face-animation-dark/blw-2.png);
+  --bl-3: url(../assets/face-animation-dark/blw-3.png);
+  --bl-4: url(../assets/face-animation-dark/blw-4.png);
+  --bl-5: url(../assets/face-animation-dark/blw-5.png);
+
+  --br-1: url(../assets/face-animation-dark/brw-1.png);
+  --br-2: url(../assets/face-animation-dark/brw-2.png);
+  --br-3: url(../assets/face-animation-dark/brw-3.png);
+  --br-4: url(../assets/face-animation-dark/brw-4.png);
+  --br-5: url(../assets/face-animation-dark/brw-5.png);
+}
+
+/* LANGUAGE SELECTOR */
+#language-selector {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.custom-select {
+  position: relative;
+  width: 5rem;
+  height: 2rem;
+  background: var(--bg-alt-2);
+  border-radius: 3rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.custom-select:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.select-selected {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.8rem 0 0;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.select-selected:after {
+  content: "▼";
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  transition: transform 0.3s ease;
+  line-height: 1;
+}
+
+.custom-select.active .select-selected:after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-items {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--bg-alt-2);
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.custom-select.active .select-items {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.select-items div {
+  padding: 0.6rem;
+  text-align: center;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.select-items div:hover,
+.select-items div.selected {
+  background: #202124;
+  color: #fff;
+}
+
+/* Dark mode styles */
+.dark-mode .custom-select {
+  background: #202124;
+}
+
+.dark-mode .select-selected {
+  color: #fff;
+}
+
+.dark-mode .select-items {
+  background: #202124;
+}
+
+.dark-mode .select-items div {
+  color: #fff;
+}
+
+.dark-mode .select-items div:hover,
+.dark-mode .select-items div.selected {
+  background: #fff;
+  color: #202124;
+}
+
+.dark-mode .select-selected:after {
+  color: #fff;
+}
+
+/* COLOR MODE TOGGLE BUTTON */
+
+#color-mode {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.toggle-wrapper {
+  position: relative;
+}
+
+.toggle-checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.toggle-label {
+  background: var(--bg-alt-2);
+  width: 5rem;
+  height: 2rem;
+  border-radius: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0.4rem;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.toggle-label:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-label .fa-sun {
+  color: #333;
+  font-size: 0.8rem;
+}
+
+.toggle-label .fa-moon {
+  color: #333;
+  font-size: 0.8rem;
+}
+
+.toggle-ball {
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: #fff;
+  border-radius: 50%;
+  left: 0.2rem;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 5px #171719;
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-ball {
+  transform: translateX(4rem);
+}
+
+.dark-mode .toggle-label {
+  background: #202124;
+}
+
+.dark-mode .toggle-ball {
+  background: #242529;
+}
+
+.dark-mode .toggle-label .fa-moon {
+  color: #fff;
+}
+
+.dark-mode .toggle-label .fa-sun {
+  color: #fff;
+}

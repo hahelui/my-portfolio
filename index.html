@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cheih Hachem Said - Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="./js/animation.js" defer></script>
+    <script src="./js/color-mode.js" defer></script>
+    <script src="./js/project-slideshow.js" defer></script>
+    <script type="module" src="./js/3d-icons.js" defer></script>
+    <script src="./js/language-selector.js" defer></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/animation.css" />
+    <link rel="stylesheet" href="./css/color-mode.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/snake-game.css">
+  </head>
+  <body>
+    <div id="three-container"></div>
+    <div id="language-selector">
+      <div class="custom-select">
+        <div class="select-selected">FR</div>
+        <div class="select-items select-hide">
+          <div data-value="fr">FR</div>
+          <div data-value="ar">AR</div>
+          <div data-value="en">EN</div>
+        </div>
+      </div>
+    </div>
+    <div id="hero">
+      <h5>Bonjour, je suis</h5>
+      <h1>Cheikh Hachem Said</h1>
+      <p>Développeur Full Stack</p>
+      <div id="hero__animation">
+        <div id="hero__animation__img"></div>
+      </div>
+    </div>
+    <nav id="grid">
+      <div id="grid__tl">
+        <div id="grid__tl__btn">À propos</div>
+        <div id="grid__tl__content">
+          <div class="cards">
+            <div class="cards__content">
+              <article>
+                <img
+                  src="./assets/icons/experience.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <h2>Expérience</h2>
+                <p>
+                  4+ ans <br />
+                  Développeur <br />
+                  Expérience
+                </p>
+              </article>
+              <p class="cards__content__text">
+                Développeur passionné avec une solide expérience dans le développement d'applications desktop et mobile. Spécialisé dans la création de solutions innovantes et efficaces.
+              </p>
+            </div>
+            <div class="cards__content">
+              <article>
+                <img
+                  src="./assets/icons/work.png"
+                  alt="Work icon"
+                  class="icon"
+                />
+                <h2>Poste Actuel</h2>
+                <p>Directeur de la Clinique De Nouadhibou</p>
+              </article>
+              <p class="cards__content__text">
+                Gestion efficace d'une clinique médicale tout en poursuivant ma passion pour le développement de solutions technologiques innovantes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="grid__tr">
+        <div id="grid__tr__btn">Expérience</div>
+        <div id="grid__tr__content">
+          <div class="cards experience">
+            <article class="experience__skill">
+              <h2>Développement Frontend</h2>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>HTML</h2>
+                  <p>Expérimenté</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>CSS</h2>
+                  <p>Expérimenté</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>JavaScript</h2>
+                  <p>Intermédiaire</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>Flutter</h2>
+                  <p>Intermédiaire</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>Python</h2>
+                  <p>Expérimenté</p>
+                </div>
+              </div>
+            </article>
+            <article class="experience__skill">
+              <h2>Développement Backend</h2>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>Python</h2>
+                  <p>Expérimenté</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>PostgreSQL</h2>
+                  <p>Basique</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>Node JS</h2>
+                  <p>Intermédiaire</p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="./assets/icons/checkmark.png"
+                  alt="Checkmark icon"
+                  class="icon"
+                />
+                <div>
+                  <h2>Git</h2>
+                  <p>Expérimenté</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div id="grid__bl">
+        <div id="grid__bl__btn">Projets</div>
+        <div id="grid__bl__content">
+          <div id="grid__bl__content__projects">
+            <div class="project p-1">
+              <img
+                class="project__img project-1"
+                src="assets/portfolio-projects/project-1-dark.png"
+                alt="Project 1"
+              />
+              <h2 class="project__title">Project One</h2>
+              <button
+                class="btn"
+                onclick="window.location.href='https://netlify.com'"
+              >
+                Demo
+              </button>
+              <button
+                class="btn"
+                onclick="window.location.href='https://github.com'"
+              >
+                GitHub
+              </button>
+            </div>
+            <div class="project p-2">
+              <img
+                class="project__img project-2"
+                src="assets/portfolio-projects/project-2-dark.png"
+                alt="Project 2"
+              />
+              <h2 class="project__title">Project Two</h2>
+              <button
+                class="btn"
+                onclick="window.location.href='https://netlify.com'"
+              >
+                Demo
+              </button>
+              <button
+                class="btn"
+                onclick="window.location.href='https://github.com'"
+              >
+                GitHub
+              </button>
+            </div>
+            <div class="project p-3">
+              <img
+                class="project__img project-3"
+                src="assets/portfolio-projects/project-3-dark.png"
+                alt="Project 3"
+              />
+              <h2 class="project__title">Project Three</h2>
+              <button
+                class="btn"
+                onclick="window.location.href='https://netlify.com'"
+              >
+                Demo
+              </button>
+              <button
+                class="btn"
+                onclick="window.location.href='https://github.com'"
+              >
+                GitHub
+              </button>
+            </div>
+            <button class="arrow" onclick="navigateProject(-1)">
+              &#10094;
+            </button>
+            <button class="arrow" onclick="navigateProject(1)">&#10095;</button>
+          </div>
+        </div>
+      </div>
+      <div id="grid__br">
+        <div id="grid__br__btn">Contact</div>
+        <div id="grid__br__content">
+          <h5 class="contact-text">Get In Touch</h5>
+          <h2 class="contact-text">Contact Me</h2>
+          <div>
+            <button
+              class="btn btn-contact"
+              onclick="window.location.href='mailto:name@gmail.com'"
+            >
+              Email
+            </button>
+            <button
+              class="btn btn-contact"
+              onclick="window.location.href='https://wa.me/22244370552'"
+            >
+              WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div id="color-mode">
+      <div class="toggle-wrapper">
+        <input type="checkbox" id="toggle-button" class="toggle-checkbox">
+        <label for="toggle-button" class="toggle-label">
+          <i class="fas fa-sun"></i>
+          <i class="fas fa-moon"></i>
+          <span class="toggle-ball"></span>
+        </label>
+      </div>
+    </div>
+  </body>
+</html>

@@ -18,6 +18,11 @@ class SnakeGame {
         this.touchStartX = null;
         this.touchStartY = null;
         this.swipeOverlay = null;
+        this.gameSpeed = 100;
+        this.konamiSequence = [];
+        this.konamiCode = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right'];
+        this.isEasterEggActive = false;
+        this.foods = []; // Array to store multiple food items for heart shape
         
         // Load high scores from localStorage
         const savedScores = localStorage.getItem('snakeHighScores');
@@ -60,8 +65,44 @@ class SnakeGame {
         pauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
         pauseBtn.addEventListener('click', this.togglePause);
         
+        // Create speed control
+        const speedControl = document.createElement('div');
+        speedControl.className = 'speed-control';
+        
+        const speedSlider = document.createElement('input');
+        speedSlider.type = 'range';
+        speedSlider.className = 'speed-slider';
+        speedSlider.min = '50';  // Slowest
+        speedSlider.max = '200'; // Fastest
+        speedSlider.value = this.gameSpeed;
+        speedSlider.addEventListener('input', (e) => {
+            // Reverse the speed value (slider shows higher = faster)
+            this.gameSpeed = 250 - parseInt(e.target.value);
+            if (this.gameLoop) {
+                clearInterval(this.gameLoop);
+                this.gameLoop = setInterval(() => this.update(), this.gameSpeed);
+            }
+            // Update slider background with theme-aware colors
+            const percentage = ((e.target.value - speedSlider.min) / (speedSlider.max - speedSlider.min)) * 100;
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
+            const filledColor = isDarkMode ? 'var(--text-alt)' : '#000000';
+            const emptyColor = isDarkMode ? 'var(--bg-alt)' : '#cccccc';
+            speedSlider.style.background = `linear-gradient(to right, ${filledColor} 0%, ${filledColor} ${percentage}%, ${emptyColor} ${percentage}%, ${emptyColor} 100%)`;
+        });
+        
+        // Set initial slider background with theme-aware colors
+        const initialPercentage = ((speedSlider.value - speedSlider.min) / (speedSlider.max - speedSlider.min)) * 100;
+        const isDarkMode = document.documentElement.classList.contains('dark-mode');
+        const filledColor = isDarkMode ? 'var(--text-alt)' : '#000000';
+        const emptyColor = isDarkMode ? 'var(--bg-alt)' : '#cccccc';
+        speedSlider.style.background = `linear-gradient(to right, ${filledColor} 0%, ${filledColor} ${initialPercentage}%, ${emptyColor} ${initialPercentage}%, ${emptyColor} 100%)`;
+        
+        speedControl.appendChild(speedSlider);
+        
+        // Add elements in the correct order
         headerLeft.appendChild(title);
         headerLeft.appendChild(pauseBtn);
+        headerLeft.appendChild(speedControl);
         
         // Create close button
         const closeBtn = document.createElement('button');
@@ -121,8 +162,8 @@ class SnakeGame {
         const directions = [
             { icon: 'fa-chevron-up', dir: 'up', grid: '1/2/2/3' },
             { icon: 'fa-chevron-left', dir: 'left', grid: '2/1/3/2' },
-            { icon: 'fa-chevron-down', dir: 'down', grid: '2/2/3/3' },
-            { icon: 'fa-chevron-right', dir: 'right', grid: '2/3/3/4' }
+            { icon: 'fa-chevron-right', dir: 'right', grid: '2/3/3/4' },
+            { icon: 'fa-chevron-down', dir: 'down', grid: '3/2/4/3' }
         ];
         
         directions.forEach(({ icon, dir, grid }) => {
@@ -176,9 +217,9 @@ class SnakeGame {
         this.updateScore();
         this.generateFood();
         
-        // Start game loop
+        // Start game loop with current speed
         if (this.gameLoop) clearInterval(this.gameLoop);
-        this.gameLoop = setInterval(() => this.update(), 100);
+        this.gameLoop = setInterval(() => this.update(), this.gameSpeed);
     }
 
     generateFood() {
@@ -192,6 +233,54 @@ class SnakeGame {
             };
         } while (this.snake.some(segment => 
             segment.x === this.food.x && segment.y === this.food.y));
+    }
+
+    generateHeartFoods() {
+        const centerX = Math.floor(this.canvas.width / (2 * this.cellSize));
+        const centerY = Math.floor(this.canvas.height / (2 * this.cellSize));
+        
+        // Clear existing foods
+        this.foods = [];
+        
+        // Heart shape coordinates (relative to center)
+        const heartPoints = [
+            [-3, -4], [-2, -4], [2, -4], [3, -4],
+            [-4, -3], [-1, -3], [1, -3], [4, -3],
+            [-5, -2], [0, -2], [5, -2],
+            [-5, -1], [5, -1],
+            [-4, 0], [4, 0],
+            [-4, 1], [4, 1],
+            [-3, 2], [3, 2],
+            [-2, 3], [2, 3],
+            [-1, 4], [1, 4],
+            [0, 5]
+        ];
+        
+        // Add food for each heart point
+        heartPoints.forEach(([xOffset, yOffset]) => {
+            this.foods.push({
+                x: centerX + xOffset,
+                y: centerY + yOffset
+            });
+        });
+    }
+
+    activateEasterEgg() {
+        console.log('Activating easter egg');
+        this.isEasterEggActive = true;
+        this.isPaused = true;
+        this.score = 0;
+        this.updateScore();
+        this.generateHeartFoods();
+        this.draw(); // Redraw to show heart
+    }
+
+    updateScore() {
+        if (this.scoreElement) {
+            this.scoreElement.textContent = this.isEasterEggActive ? 
+                `I Love Aziza: ${this.score}` : 
+                `Score: ${this.score}`;
+        }
     }
 
     update() {
@@ -220,7 +309,7 @@ class SnakeGame {
         
         // Check for self collision
         if (this.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
-            this.gameOver();
+            this.gameOver(false);
             return;
         }
         
@@ -228,20 +317,35 @@ class SnakeGame {
         this.snake.unshift(head);
         
         // Check if food was eaten
-        if (head.x === this.food.x && head.y === this.food.y) {
-            this.score += 10;
-            this.updateScore();
-            this.generateFood();
+        if (this.isEasterEggActive) {
+            // Check collision with any heart food
+            const foodEaten = this.foods.findIndex(food => 
+                food.x === head.x && food.y === head.y);
+            
+            if (foodEaten !== -1) {
+                this.score += 1000;
+                this.updateScore();
+                this.foods.splice(foodEaten, 1);
+                // If all heart foods are eaten, trigger win condition
+                if (this.foods.length === 0) {
+                    this.gameOver(true);
+                    return;
+                }
+            } else {
+                this.snake.pop();
+            }
         } else {
-            this.snake.pop();
+            // Normal game food check
+            if (head.x === this.food.x && head.y === this.food.y) {
+                this.score += 10;
+                this.updateScore();
+                this.generateFood();
+            } else {
+                this.snake.pop();
+            }
         }
         
         this.draw();
-    }
-
-    checkCollision(head) {
-        // Only check for self collision since we have wall teleportation
-        return this.snake.some(segment => segment.x === head.x && segment.y === head.y);
     }
 
     draw() {
@@ -250,13 +354,18 @@ class SnakeGame {
             .getPropertyValue('--bg-alt-2').trim();
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw snake
+        // Get snake body color based on theme
         const isDarkMode = document.documentElement.classList.contains('dark-mode');
-        this.ctx.fillStyle = isDarkMode ? 
-            getComputedStyle(document.documentElement).getPropertyValue('--text-alt').trim() :
+        const snakeBodyColor = isDarkMode ? 
+            '#cccccc' : // slightly grey for dark mode
             getComputedStyle(document.documentElement).getPropertyValue('--bg-alt').trim();
             
-        this.snake.forEach(segment => {
+        // Get snake head color (slightly different from body)
+        const snakeHeadColor = isDarkMode ? '#ffffff' : '#000000';
+            
+        // Draw snake body
+        this.snake.slice(1).forEach(segment => {
+            this.ctx.fillStyle = snakeBodyColor;
             this.ctx.fillRect(
                 segment.x * this.cellSize,
                 segment.y * this.cellSize,
@@ -265,16 +374,36 @@ class SnakeGame {
             );
         });
         
-        // Draw food
-        const textColor = getComputedStyle(document.documentElement)
-            .getPropertyValue('--text').trim();
-        this.ctx.fillStyle = textColor;
+        // Draw snake head with different color
+        this.ctx.fillStyle = snakeHeadColor;
         this.ctx.fillRect(
-            this.food.x * this.cellSize,
-            this.food.y * this.cellSize,
+            this.snake[0].x * this.cellSize,
+            this.snake[0].y * this.cellSize,
             this.cellSize - 1,
             this.cellSize - 1
         );
+        
+        // Draw food(s)
+        this.ctx.fillStyle = '#ff0000';
+        if (this.isEasterEggActive) {
+            // Draw all foods in heart shape
+            this.foods.forEach(food => {
+                this.ctx.fillRect(
+                    food.x * this.cellSize,
+                    food.y * this.cellSize,
+                    this.cellSize - 1,
+                    this.cellSize - 1
+                );
+            });
+        } else {
+            // Draw single food
+            this.ctx.fillRect(
+                this.food.x * this.cellSize,
+                this.food.y * this.cellSize,
+                this.cellSize - 1,
+                this.cellSize - 1
+            );
+        }
     }
 
     handleKeydown(e) {
@@ -285,43 +414,102 @@ class SnakeGame {
             e.preventDefault();
         }
         
+        // Map arrow keys to directions
+        let direction = null;
         switch (key) {
             case 'arrowup':
             case 'w':
-                if (this.direction !== 'down') this.nextDirection = 'up';
+                direction = 'up';
+                if (this.direction !== 'down') {
+                    this.nextDirection = 'up';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case 'arrowdown':
             case 's':
-                if (this.direction !== 'up') this.nextDirection = 'down';
+                direction = 'down';
+                if (this.direction !== 'up') {
+                    this.nextDirection = 'down';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case 'arrowleft':
             case 'a':
-                if (this.direction !== 'right') this.nextDirection = 'left';
+                direction = 'left';
+                if (this.direction !== 'right') {
+                    this.nextDirection = 'left';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case 'arrowright':
             case 'd':
-                if (this.direction !== 'left') this.nextDirection = 'right';
+                direction = 'right';
+                if (this.direction !== 'left') {
+                    this.nextDirection = 'right';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case ' ':
                 this.togglePause();
                 break;
         }
+        
+        // Check for Konami code
+        if (direction) {
+            this.konamiSequence.push(direction);
+            if (this.konamiSequence.length > this.konamiCode.length) {
+                this.konamiSequence.shift();
+            }
+            
+            // Check if sequence matches
+            if (this.konamiSequence.length === this.konamiCode.length &&
+                this.konamiSequence.every((dir, i) => dir === this.konamiCode[i])) {
+                this.activateEasterEgg();
+                this.konamiSequence = []; // Reset sequence
+            }
+        }
     }
-
+    
     touchHandler(direction) {
+        // Handle touch controls for snake direction
         switch (direction) {
             case 'up':
-                if (this.direction !== 'down') this.nextDirection = 'up';
+                if (this.direction !== 'down') {
+                    this.nextDirection = 'up';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case 'down':
-                if (this.direction !== 'up') this.nextDirection = 'down';
+                if (this.direction !== 'up') {
+                    this.nextDirection = 'down';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case 'left':
-                if (this.direction !== 'right') this.nextDirection = 'left';
+                if (this.direction !== 'right') {
+                    this.nextDirection = 'left';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
             case 'right':
-                if (this.direction !== 'left') this.nextDirection = 'right';
+                if (this.direction !== 'left') {
+                    this.nextDirection = 'right';
+                    if (this.isPaused) this.togglePause();
+                }
                 break;
+        }
+        
+        // Check for Konami code with touch/swipe
+        this.konamiSequence.push(direction);
+        if (this.konamiSequence.length > this.konamiCode.length) {
+            this.konamiSequence.shift();
+        }
+        
+        // Check if sequence matches
+        if (this.konamiSequence.length === this.konamiCode.length &&
+            this.konamiSequence.every((dir, i) => dir === this.konamiCode[i])) {
+            this.activateEasterEgg();
+            this.konamiSequence = []; // Reset sequence
         }
     }
 
@@ -331,10 +519,6 @@ class SnakeGame {
         pauseBtn.className = this.isPaused ? 'fas fa-play' : 'fas fa-pause';
     }
 
-    updateScore() {
-        this.scoreElement.textContent = `Score: ${this.score}`;
-    }
-
     updateHighScores() {
         this.highScores.push(this.score);
         this.highScores.sort((a, b) => b - a);
@@ -342,25 +526,42 @@ class SnakeGame {
         localStorage.setItem('snakeHighScores', JSON.stringify(this.highScores));
     }
 
-    gameOver() {
+    gameOver(isWin = false) {
         clearInterval(this.gameLoop);
+        this.gameLoop = null;
         this.updateHighScores();
-        this.showGameOver();
+        this.showGameOver(isWin);
     }
 
-    showGameOver() {
-        // Create game over screen if it doesn't exist
+    showGameOver(isWin = false) {
+        let message, scoreDisplay;
+        
+        if (this.isEasterEggActive) {
+            if (isWin) {  // Won by collecting all heart food
+                message = "I won Aziza's heart";
+                scoreDisplay = "❤️";
+                // Reset to normal mode
+                this.isEasterEggActive = false;
+            } else {  // Lost during easter egg mode
+                message = "You Don't Love Aziza enough";
+                scoreDisplay = "💔";
+            }
+        } else {
+            message = "Game Over";
+            scoreDisplay = `Score: ${this.score}`;
+        }
+
         if (!this.gameOverScreen) {
             this.gameOverScreen = document.createElement('div');
             this.gameOverScreen.className = 'game-over-screen';
             
             const title = document.createElement('h2');
             title.className = 'game-over-title';
-            title.textContent = 'Game Over!';
+            title.textContent = message;
             
             const score = document.createElement('p');
             score.className = 'game-over-score';
-            score.textContent = `Score: ${this.score}`;
+            score.textContent = scoreDisplay;
             
             const buttons = document.createElement('div');
             buttons.className = 'game-over-buttons';
@@ -386,9 +587,11 @@ class SnakeGame {
             const canvasWrapper = this.canvas.parentElement;
             canvasWrapper.appendChild(this.gameOverScreen);
         } else {
-            // Update score
+            // Update title and score
+            const titleElement = this.gameOverScreen.querySelector('.game-over-title');
             const scoreElement = this.gameOverScreen.querySelector('.game-over-score');
-            scoreElement.textContent = `Score: ${this.score}`;
+            titleElement.textContent = message;
+            scoreElement.textContent = scoreDisplay;
             this.gameOverScreen.style.display = 'flex';
         }
     }

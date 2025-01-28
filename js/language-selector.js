@@ -27,7 +27,7 @@ const translations = {
   },
   ar: {
     greeting: "مرحباً، أنا",
-    name: "الشيخ هاسم السعيد",
+    name: "الشيخ هاشم السعيد",
     role: "مطور شامل",
     about: "نبذة عني",
     experience: "الخبرات",

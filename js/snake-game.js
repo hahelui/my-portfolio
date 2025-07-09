@@ -278,7 +278,7 @@ class SnakeGame {
     updateScore() {
         if (this.scoreElement) {
             this.scoreElement.textContent = this.isEasterEggActive ? 
-                `I Love Aziza: ${this.score}` : 
+                `I Love Fatima: ${this.score}` : 
                 `Score: ${this.score}`;
         }
     }
@@ -538,12 +538,12 @@ class SnakeGame {
         
         if (this.isEasterEggActive) {
             if (isWin) {  // Won by collecting all heart food
-                message = "I won Aziza's heart";
+                message = "I won Fatima's heart";
                 scoreDisplay = "❤️";
                 // Reset to normal mode
                 this.isEasterEggActive = false;
             } else {  // Lost during easter egg mode
-                message = "You Don't Love Aziza enough";
+                message = "You Don't Love Fatima enough";
                 scoreDisplay = "💔";
             }
         } else {
